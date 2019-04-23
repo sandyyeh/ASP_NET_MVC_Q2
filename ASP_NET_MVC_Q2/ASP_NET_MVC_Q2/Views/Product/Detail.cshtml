@@ -1,0 +1,26 @@
+﻿@model ASP_NET_MVC_Q2.Models.ProductModel
+
+@{
+    ViewBag.Title = "Detail";
+}
+
+<h2>Detail</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>ProductName</dt>
+        <dd>@Html.DisplayFor(model => model.Product_Name)</dd>
+        <dt>Locale</dt>
+        <dd>@Html.DisplayFor(model => model.Locale)</dd>
+        <dt>Price</dt>
+        <dd>@Html.DisplayFor(model => model.Price)</dd>
+        <dt>PromotePrice</dt>
+        <dd>@Html.DisplayFor(model => model.Promote_Price)</dd>
+        <dt>CreateDate</dt>
+        <dd>@Html.DisplayFor(model => model.Create_Date)</dd>
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Back to List", "Product")
+</p>

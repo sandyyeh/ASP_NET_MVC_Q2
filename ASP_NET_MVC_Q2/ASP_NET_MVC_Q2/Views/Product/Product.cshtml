@@ -1,0 +1,55 @@
+﻿@model IPagedList<ASP_NET_MVC_Q2.Models.ProductModel>
+
+@using PagedList;
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "Product";
+}
+
+<h2>Product</h2>
+
+
+<table class="table">
+    <tr>
+        <th>產品編號</th>
+        <th>產品名稱</th>
+        <th>地區</th>
+        <th>建立時間</th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Id)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Product_Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Locale)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Create_Date)
+        </td>
+        <td>  
+            @Html.ActionLink("Detail", "Detail", new { id = item.Id,product_name=item.Product_Name,locale=item.Locale,price=item.Price,promote_price=item.Promote_Price,create_date=item.Create_Date}) 
+        </td>
+    </tr>
+    }
+
+</table>
+<div class="box24 align_c">
+    <ul class="pagination">
+        <p align="left"> @Html.PagedListPager(Model, Page => Url.Action("Product", new { Page }), PagedListRenderOptions.Classic)</p>
+    </ul>
+    <div class="page_box r_float">
+        <p align="right">@(Model.TotalItemCount) results,Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount</p>
+        <span class="page_bt">
+            <a href="#" class="arrow04 disable" title="Previous"></a>
+            <span></span>
+            <a href="#" class="arrow05" title="Next"></a>
+        </span>
+    </div>
+</div>
