@@ -1,4 +1,4 @@
-﻿@model IPagedList<ASP_NET_MVC_Q2.Models.ProductModel>
+﻿@model IPagedList<ASP_NET_MVC_Q2.Models.Product>
 
 @using PagedList;
 @using PagedList.Mvc;
@@ -20,23 +20,23 @@
 
     @foreach (var item in Model)
     {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Id)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Product_Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Locale)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Create_Date)
-        </td>
-        <td>  
-            @Html.ActionLink("Detail", "Detail", new { id = item.Id,product_name=item.Product_Name,locale=item.Locale,price=item.Price,promote_price=item.Promote_Price,create_date=item.Create_Date}) 
-        </td>
-    </tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Product_Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Locale)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Create_Date)
+            </td>
+            <td>
+                @Html.ActionLink("Detail", "Detail", new { id = item.Id, product_name = item.Product_Name, locale = item.Locale, create_date = item.Create_Date })
+            </td>
+        </tr>
     }
 
 </table>

@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using PagedList;
 using System.Globalization;
+using ASP_NET_MVC_Q2.ViewModel;
 
 namespace ASP_NET_MVC_Q2.Controllers
 {
@@ -17,74 +18,84 @@ namespace ASP_NET_MVC_Q2.Controllers
             return View();
         }
 
-        public ActionResult Product(ProductModel productModel, int? page)
+        public ActionResult Product(Product product, int? page)
         {
 
             string file = Server.MapPath("~/App_Data/data.json");
             string json = System.IO.File.ReadAllText(file);
-            List<ProductModel> _list = JsonConvert.DeserializeObject<List<ProductModel>>(json);
+            List<Product> list = JsonConvert.DeserializeObject<List<Product>>(json);
 
             int pageSize = 5;
             int pageNumber = (page ?? 1);
             
-            var result = _list.ToPagedList(pageNumber, pageSize);
+            var result = list.ToPagedList(pageNumber, pageSize);
 
             return View(result);
         }
 
-        public ActionResult Detail(ProductModel product)
+        public ActionResult Detail(Product product,Detail detail,int? id)
         {
-        
-            if (!string.IsNullOrEmpty(product.Price.ToString()))
-            { 
-
-                if (decimal.TryParse(product.Price, out decimal number))
-                {
-                    //呼叫GetLocale()方法 以代入貨幣傳換公式string.Format(new CultureInfo("en-US"), "{0:c}", price);
-                    product.Price = Convert.ToString(string.Format(new CultureInfo(GetLocale(product.Locale)), "{0:c}", decimal.Parse(product.Price)));
-
-                }
-                else
-                {
-                    product.Price = "-";                  
-                }
-
-            }
-            else
-            {
-                product.Price = "-";
-            }
-
-            if (!string.IsNullOrEmpty(product.Promote_Price))
-            {
-                if (decimal.TryParse(product.Promote_Price, out decimal number))
-                {
-                    product.Promote_Price = Convert.ToString(string.Format(new CultureInfo(GetLocale(product.Locale)), "{0:c}", decimal.Parse(product.Promote_Price)));
-                }
-                else
-                {
-                    product.Promote_Price = "-";
-                }
-            }       
-            else
-            {
-                product.Promote_Price = "-";
-            }
-
-            ProductModel model = new ProductModel();
-
-            model.Id = product.Id;
-            model.Product_Name = product.Product_Name;
-            model.Promote_Price = product.Promote_Price;
-            model.Locale = product.Locale;
-            model.Create_Date = product.Create_Date;
-            model.Price = product.Price;
+           
+            product.Id = detail.Id;
+            DetailViewModel detailViewModel = new DetailViewModel();
+           // product.Id = detailViewModel.Detail.Id;
+            product.Locale = detailViewModel.Product.Locale;
+            product.Create_Date = detailViewModel.Product.Create_Date;
+            product.Product_Name = detailViewModel.Product.Product_Name;
+            detail.Price = detailViewModel.Detail.Price;
+            detail.Promote_Price = detailViewModel.Detail.Promote_Price;
 
 
+            //if (!string.IsNullOrEmpty(detailViewModel.Detail.Price))
+            //{
+            ////    if (decimal.TryParse(detailViewModel.Price, out decimal number))
+            //    {
+            //        //呼叫GetLocale()方法 以代入貨幣傳換公式string.Format(new CultureInfo("en-US"), "{0:c}", price);
+            //        detailViewModel.Price = Convert.ToString(string.Format(new CultureInfo(GetLocale(detailViewModel.Product.Locale)), "{0:c}", decimal.Parse(detailViewModel.Price)));
+
+            //    }
+            //    else
+            //    {
+            //        detailViewModel.Price = "-";
+            //    }
+            //}
+            //else
+            //{
+            //    detailViewModel.Detail.Price = "-";
+            //}
 
 
-            return View(model);
+            //if (!string.IsNullOrEmpty(detailViewModel.Promote_Price))
+            //{
+            //    if (decimal.TryParse(detailViewModel.Promote_Price, out decimal number))
+            //    {
+            //        detailViewModel.Promote_Price = Convert.ToString(string.Format(new CultureInfo(GetLocale(detailViewModel.Product.Locale)), "{0:c}", decimal.Parse(detailViewModel.Promote_Price)));
+            //    }
+            //    else
+            //    {
+            //        detailViewModel.Promote_Price = "-";
+            //    }
+            //}
+            //else
+            //{
+            //    detailViewModel.Promote_Price = "-";
+            //}
 
+            //DetailViewModel model = new DetailViewModel();
+
+
+            ////model.Product.Id= product.Id;
+            //model.Product.Product_Name = product.Product_Name;
+            //model.Promote_Price = detailViewModel.Promote_Price;
+            //model.Product.Locale = product.Locale;
+            //model.Product.Create_Date = product.Create_Date;
+            //model.Price = detailViewModel.Price;
+
+            return View(detailViewModel);
+
+
+           // return View(model);
+            
         }
 
 
