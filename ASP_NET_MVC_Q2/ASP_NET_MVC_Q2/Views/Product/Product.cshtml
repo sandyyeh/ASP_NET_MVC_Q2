@@ -1,4 +1,4 @@
-﻿@model IPagedList<ASP_NET_MVC_Q2.Models.Product>
+﻿@model IPagedList<ASP_NET_MVC_Q2.ViewModel.ProductViewModel>
 
 @using PagedList;
 @using PagedList.Mvc;
@@ -34,7 +34,7 @@
                 @Html.DisplayFor(modelItem => item.Create_Date)
             </td>
             <td>
-                @Html.ActionLink("Detail", "Detail", new { id = item.Id, product_name = item.Product_Name, locale = item.Locale, create_date = item.Create_Date })
+                @Html.ActionLink("Detail", "Detail", new { id = item.Id })
             </td>
         </tr>
     }
